@@ -6,6 +6,7 @@
 
 package model;
 
+import java.text.DecimalFormat;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -14,29 +15,33 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class AllInOneCalculatorService {
     
+    DecimalFormat df = new DecimalFormat("#0.0000");
     private String answer;
     private double area;
+    private String unit;
     public static final double PI = 3.14;
     private static final String ERR_MSG = "Please provide numeric values!";
     public AllInOneCalculatorService() {}
     
     
-    public HttpServletRequest calculateAreaByShape(HttpServletRequest request, GeometricShape shape) {
+    public HttpServletRequest 
+	calculateAreaByShape(HttpServletRequest request, GeometricShape shape) {
 	
 	switch(shape) {
 	    
 	    case RECTANGLE:
 		String stLen = request.getParameter("length");
-		String stHgh = request.getParameter("height");
+		String stWid = request.getParameter("width");
+		unit = request.getParameter("unit1");
 		double length;
-		double height;
+		double width;
 		
 		try {
 		    length = Double.valueOf(stLen);
-		    height = Double.valueOf(stHgh);
-		    
-		    area = length * height;
-		    answer = String.valueOf(area);
+		    width = Double.valueOf(stWid);
+		    		    
+		    area = length * width;
+		    answer = String.valueOf(df.format(area)) + " sq " + unit;
 		    
 		
 		} catch (NumberFormatException nfe) {
@@ -50,6 +55,7 @@ public class AllInOneCalculatorService {
 		String stSideA = request.getParameter("sideA");
 		String stSideB = request.getParameter("sideB");
 		String stSideC = request.getParameter("sideC");
+		unit = request.getParameter("unit2");
 		
 		/*
 		    area is calcuated with Heron's formula		
@@ -58,11 +64,11 @@ public class AllInOneCalculatorService {
 		    double a = Double.valueOf(stSideA);
 		    double b = Double.valueOf(stSideB);
 		    double c = Double.valueOf(stSideC);
-		    
+		    		    
 		    double s = 0.5*(a + b + c);		    
 		    area = Math.sqrt(s*(s-a)*(s-b)*(s-c));
 		    
-		    answer = String.valueOf(area);
+		    answer = String.valueOf(df.format(area)) + " sq " + unit;
 		    
 		} catch (NumberFormatException nfe) {
 		    answer = ERR_MSG;		
@@ -75,12 +81,13 @@ public class AllInOneCalculatorService {
 	
 	    case CIRCLE:
 		String stRad = request.getParameter("radius");
+		unit = request.getParameter("unit3");
 		
 		try {
 		    double radius = Double.valueOf(stRad);
 		    
 		    area = PI * radius*radius;		    
-		    answer = String.valueOf(area);		
+		    answer = String.valueOf(df.format(area)) + " sq " + unit;		
 		
 		} catch(NumberFormatException nfe) {
 		

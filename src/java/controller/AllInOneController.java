@@ -49,14 +49,12 @@ public class AllInOneController extends HttpServlet {
 	    
 	} else if (calcType.equalsIgnoreCase(TRIANGLE)) {	    
 	    request = service.calculateAreaByShape(request, GeometricShape.TRIANGLE);
-	     request.setAttribute("area2", request.getAttribute("answer"));
+	    request.setAttribute("area2", request.getAttribute("answer"));
 	
 	} else if (calcType.equalsIgnoreCase(CIRCLE)) {
 	    request = service.calculateAreaByShape(request, GeometricShape.CIRCLE);
-	     request.setAttribute("area3", request.getAttribute("answer"));
+	    request.setAttribute("area3", request.getAttribute("answer"));
 	}	
-	
-	
 	
 	RequestDispatcher view = request.getRequestDispatcher(RESULT_PAGE);
         view.forward(request, response);
